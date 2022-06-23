@@ -1,10 +1,25 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-const someObservable$ = new Observable<string>(subscriber => {
-  subscriber.next('Alice');
-  subscriber.next('Ben');
-  subscriber.next('Charlie');
-  subscriber.complete();
+const observable = new Observable<string>((subscriber) => {
+  console.log("Oberservable executed");
+  subscriber.next("Alice");
+  setTimeout(() => subscriber.next("Ben"), 2000);
+  setTimeout(() => subscriber.next("Charlie"), 4000);
 });
 
-someObservable$.subscribe(value => console.log(value));
+console.log("Subscription 1 starts");
+observable.subscribe((value: string) => console.log("Subscription 1:", value));
+
+setTimeout(() => {
+  console.log("Subscription 2 starts");
+  observable.subscribe((value: string) => console.log("Subscription 2:", value));
+}, 1000);
+
+// const subscription = observable.subscribe((value: string) =>
+//   console.log(value)
+// ); 
+
+// setTimeout(() => {
+//   console.log("Unsubscribe");
+//   subscription.unsubscribe();
+// }, 3000);

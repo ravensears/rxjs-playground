@@ -1,23 +1,51 @@
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 
-const interval = new Observable<number>((subscriber) => {
-  let counter = 1;
+//of creation function
 
-  const intervalId = setInterval(() => {
-    console.log("Emitted", counter);
-    subscriber.next(counter++);
-  }, 1000);
-
-  return () => {
-    clearInterval(intervalId);
-  };
+of("Alice", "Ben", "Charlie").subscribe({
+  next: (value) => console.log(value),
+  complete: () => console.log("completed"),
 });
 
-const subscription = interval.subscribe((value) => console.log(value));
+// const names = new Observable<string>((subscriber) => {
+//   subscriber.next("Alice");
+//   subscriber.next("Ben");
+//   subscriber.next("Charlie");
+//   subscriber.complete();
+// });
 
-setTimeout(() => {
-  subscription.unsubscribe();
-}, 10000);
+// names.subscribe({
+//   next: (value) => console.log(value),
+//   complete: () => console.log("complete"),
+// });
+
+// function ourOwnOf(...args: string[]): Observable<string> {
+//   return new Observable<string>((subscriber) => {
+//     for (let i = 0; i < args.length; i++) {
+//       subscriber.next(args[i]);
+//     }
+//     subscriber.complete();
+//   });
+// }
+
+// const interval = new Observable<number>((subscriber) => {
+//   let counter = 1;
+
+//   const intervalId = setInterval(() => {
+//     console.log("Emitted", counter);
+//     subscriber.next(counter++);
+//   }, 1000);
+
+//   return () => {
+//     clearInterval(intervalId);
+//   };
+// });
+
+// const subscription = interval.subscribe((value) => console.log(value));
+
+// setTimeout(() => {
+//   subscription.unsubscribe();
+// }, 10000);
 
 // const observable = new Observable<string>((subscriber) => {
 //   subscriber.next("Alice");
